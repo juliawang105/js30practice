@@ -44,6 +44,15 @@
     addItems.reset();
   }
 
+  const toggleDone = (e) => {
+    e.stopPropagation();
+    if(!e.target.matches('input')) return; 
+    const el = e.target; 
+    items[el.dataset.index].done = !items[el.dataset.index].done 
+    localStorage.setItem('items', JSON.stringify(items));
+    populateList(items, itemsList);
+  }
+
   const populateList = (plates = [], platesList) => {
 
     platesList.innerHTML = plates.map( (plate, i ) => {
@@ -57,7 +66,8 @@
   }
 
   addItems.addEventListener('submit', addItem)
-   populateList(items, itemsList);
+  populateList(items, itemsList);
+  itemsList.addEventListener('click', toggleDone)
 
 </script>
 
